@@ -1,4 +1,4 @@
-package futurewiz.cou.kr.firebasechat;
+package futurewiz.cou.kr.firebasechat.chatting;
 
 /**
  * Created by my on 2017-11-25.

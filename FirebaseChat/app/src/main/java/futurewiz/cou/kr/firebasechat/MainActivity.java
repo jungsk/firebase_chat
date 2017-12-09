@@ -1,5 +1,6 @@
 package futurewiz.cou.kr.firebasechat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,78 +17,22 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Random;
 
+import futurewiz.cou.kr.firebasechat.chatting.ChattingActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String userName;
-
-    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = firebaseDatabase.getReference();
-
-    private ListView listView;
-    private EditText editText;
     private Button button;
-
-    private ArrayAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = (ListView) findViewById(R.id.listView);
-        editText = (EditText) findViewById(R.id.editText);
         button = (Button) findViewById(R.id.button);
-
-        userName = "user" + new Random().nextInt(10000);
-
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1);
-        listView.setAdapter(adapter);
-
         button.setOnClickListener(this);
-
-        databaseReference.child("message").addChildEventListener(childEventListner);
-        
     }
 
     @Override
     public void onClick(View view) {
-        if (view == button) {
-            ChatData chatData = new ChatData();
-            chatData.setUserName(userName);
-            chatData.setMessage(editText.getText().toString());
-
-            databaseReference.child("message").push().setValue(chatData);
-            editText.setText("");
-        }
+        startActivity(new Intent(this, ChattingActivity.class));
     }
-
-    private ChildEventListener childEventListner = new ChildEventListener() {
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            ChatData chatData = dataSnapshot.getValue(ChatData.class);
-            adapter.add(chatData.getUserName() + " : " + chatData.getMessage());
-
-            listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        }
-
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
 }

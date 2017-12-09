@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String userName;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText = (EditText) findViewById(R.id.editText);
         button = (Button) findViewById(R.id.button);
 
-        userName = "TestName";
+        userName = "user" + new Random().nextInt(10000);
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1);
         listView.setAdapter(adapter);

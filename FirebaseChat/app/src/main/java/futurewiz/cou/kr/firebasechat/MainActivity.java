@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(this);
 
         databaseReference.child("message").addChildEventListener(childEventListner);
+        
     }
 
     @Override
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             ChatData chatData = dataSnapshot.getValue(ChatData.class);
             adapter.add(chatData.getUserName() + " : " + chatData.getMessage());
+
+            listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         }
 
         @Override

@@ -17,22 +17,24 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Random;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+import futurewiz.cou.kr.firebasechat.base.BaseActivity;
 import futurewiz.cou.kr.firebasechat.chatting.ChattingActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity {
 
-    private Button button;
+    @BindView(R.id.button)
+    Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
+        super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onClick(View view) {
+    @OnClick(R.id.button)
+    public void buttonOnClick() {
         startActivity(new Intent(this, ChattingActivity.class));
     }
 }

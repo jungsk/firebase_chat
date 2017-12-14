@@ -19,7 +19,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".chatting.ChattingActivity"/>
+        <activity
+            android:name=".chatting.ChattingActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
     </application>
 
 </manifest>

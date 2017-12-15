@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by yongtae on 2017. 12. 14..
@@ -19,17 +20,21 @@ public class BaseFragment extends Fragment {
     protected FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     protected DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-    private View view;
+    protected View view;
+    protected Unbinder unbinder;
 
-    protected void setView(View view) {
+    public void setView(View view) {
         this.view = view;
+        if (unbinder == null) {
+            unbinder = ButterKnife.bind(this, this.view);
+        }
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (view != null) {
-            ButterKnife.bind(view);
+    public void onDestroy() {
+        super.onDestroy();
+        if (unbinder != null) {
+            unbinder.unbind();
         }
     }
 }

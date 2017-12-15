@@ -4,17 +4,23 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import futurewiz.cou.kr.firebasechat.R;
 
 /**
  * Created by yongtae on 2017. 12. 14..
  */
 
 public class BaseActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     protected FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     protected DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -24,5 +30,6 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
     }
 }

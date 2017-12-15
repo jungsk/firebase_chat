@@ -1,4 +1,4 @@
-package futurewiz.cou.kr.firebasechat.chatting;
+package futurewiz.cou.kr.firebasechat.chat;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -40,6 +40,8 @@ public class ChattingActivity  extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_chatting);
         super.onCreate(savedInstanceState);
+
+        setTitle("채팅방");
 
         userName = "user" + new Random().nextInt(10000);
 

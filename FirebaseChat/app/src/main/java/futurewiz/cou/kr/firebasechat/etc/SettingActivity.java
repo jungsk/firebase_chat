@@ -8,6 +8,7 @@ import futurewiz.cou.kr.firebasechat.base.BaseActivity;
 
 /**
  * Created by bag-yongtae on 2017. 12. 15..
+ * 설정 Activity
  */
 
 public class SettingActivity extends BaseActivity {

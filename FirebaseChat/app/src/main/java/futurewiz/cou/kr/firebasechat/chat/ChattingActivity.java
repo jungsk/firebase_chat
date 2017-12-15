@@ -20,9 +20,10 @@ import futurewiz.cou.kr.firebasechat.base.BaseActivity;
 
 /**
  * Created by my on 2017-12-09.
+ * 채팅방 Activity
  */
 
-public class ChattingActivity  extends BaseActivity {
+public class ChattingActivity extends BaseActivity {
 
     @BindView(R.id.chat_listView)
     ListView chatListView;

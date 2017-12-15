@@ -1,21 +1,16 @@
 package futurewiz.cou.kr.firebasechat.frends;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import futurewiz.cou.kr.firebasechat.R;
 import futurewiz.cou.kr.firebasechat.base.BaseFragment;
-import futurewiz.cou.kr.firebasechat.chat.ChattingActivity;
 
 /**
  * Created by bag-yongtae on 2017. 12. 15..
+ * 친구목록 Fragment
  */
 
 public class FriendsListFragment extends BaseFragment {

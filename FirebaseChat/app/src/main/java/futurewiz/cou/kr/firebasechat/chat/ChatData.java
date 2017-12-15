@@ -2,6 +2,7 @@ package futurewiz.cou.kr.firebasechat.chat;
 
 /**
  * Created by my on 2017-11-25.
+ * 채팅 Data
  */
 
 public class ChatData {

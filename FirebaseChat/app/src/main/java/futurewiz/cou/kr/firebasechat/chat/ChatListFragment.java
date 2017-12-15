@@ -2,7 +2,6 @@ package futurewiz.cou.kr.firebasechat.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import futurewiz.cou.kr.firebasechat.base.BaseFragment;
 
 /**
  * Created by bag-yongtae on 2017. 12. 15..
+ * 채팅방 목록 Fragment
  */
 
 public class ChatListFragment extends BaseFragment {

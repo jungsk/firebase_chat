@@ -12,4 +12,79 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_scrollFlags="scroll|enterAlways" />
 
+    <EditText
+        android:id="@+id/id_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/id_pw"
+        android:layout_alignStart="@+id/id_pw"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="74dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="abc@naver.com"/>
+
+    <EditText
+        android:id="@+id/id_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_email"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="35dp"
+        android:layout_toEndOf="@+id/textpw"
+        android:layout_toRightOf="@+id/textpw"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_pw"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="99dp"
+        android:layout_toEndOf="@+id/loginup"
+        android:layout_toRightOf="@+id/loginup"
+        android:text="로그인"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/textid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/id_email"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="38dp"
+        android:layout_marginStart="38dp"
+        android:text="아이디"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/textpw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/id_pw"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
+        android:text="비밀번호"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/loginup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/login"
+        android:layout_alignBottom="@+id/login"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@+id/textid"
+        android:layout_toRightOf="@+id/textid"
+        android:text="회원가입"
+        android:textSize="20dp" />
+
 </RelativeLayout>

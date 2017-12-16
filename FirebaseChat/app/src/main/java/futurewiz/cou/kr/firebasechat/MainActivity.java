@@ -10,6 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +38,8 @@ public class MainActivity extends BaseActivity {
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -89,5 +95,25 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         return true;
+    }
+
+    public void writeDataExample() {
+        // 데이터 쓰기
+        databaseReference.child("users").child("cUser").setValue("TEST");
+    }
+
+    public void readDataExample() {
+        // 데이터 읽기
+        databaseReference.child("users").child("aUser").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

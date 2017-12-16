@@ -10,7 +10,10 @@ import android.widget.Toast;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -44,12 +47,33 @@ public class ChattingActivity extends BaseActivity {
 
         setTitle("채팅방");
 
-        userName = "user" + new Random().nextInt(10000);
+        userName = "aUser";
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1);
         chatListView.setAdapter(adapter);
 
-        databaseReference.child("message").addChildEventListener(childEventListner);
+        databaseReference.child("rooms").child("room01").child("message").addChildEventListener(childEventListner);
+
+        databaseReference.child("rooms/room01/users/" + userName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Boolean boolValue = (Boolean) dataSnapshot.getValue();
+
+                if (boolValue == false) {
+                    Toast.makeText(getApplicationContext(), "접속 금지", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "no", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @OnClick(R.id.send_button)
@@ -58,10 +82,12 @@ public class ChattingActivity extends BaseActivity {
 
         if (!sendMessage.isEmpty()) {
             ChatData chatData = new ChatData();
-            chatData.setUserName(userName);
+            chatData.setUserId(userName);
             chatData.setMessage(messageEditText.getText().toString());
+            chatData.setTimestamp(1);
 
-            databaseReference.child("message").push().setValue(chatData);
+            databaseReference.child("rooms").child("room01").child("message").push().setValue(chatData);
+
             messageEditText.setText("");
         } else {
             Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_LONG);
@@ -72,7 +98,11 @@ public class ChattingActivity extends BaseActivity {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             ChatData chatData = dataSnapshot.getValue(ChatData.class);
-            adapter.add(chatData.getUserName() + " : " + chatData.getMessage());
+            adapter.add(chatData.getUserId() + " : " + chatData.getMessage());
+
+            Map<String, Object> childUpdates = new HashMap<>();
+            childUpdates.put("rooms/room01/users/aUser", false);
+            databaseReference.updateChildren(childUpdates);
 
             chatListView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         }

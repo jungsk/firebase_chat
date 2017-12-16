@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -23,6 +24,8 @@ import futurewiz.cou.kr.firebasechat.chat.ChatListFragment;
 import futurewiz.cou.kr.firebasechat.etc.ProfileActivity;
 import futurewiz.cou.kr.firebasechat.etc.SettingActivity;
 import futurewiz.cou.kr.firebasechat.frends.FriendsListFragment;
+import futurewiz.cou.kr.firebasechat.login.LoginActivity;
+import futurewiz.cou.kr.firebasechat.login.RegisterActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -30,6 +33,8 @@ public class MainActivity extends BaseActivity {
     TabLayout tabLayout;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,10 @@ public class MainActivity extends BaseActivity {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {

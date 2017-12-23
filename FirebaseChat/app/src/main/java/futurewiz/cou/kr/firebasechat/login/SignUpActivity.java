@@ -91,7 +91,6 @@ public class SignUpActivity extends BaseActivity {
             public void onResult(Boolean success, String exceptionString) {
                 if (success) {
                     UserData userData = new UserData();
-                    userData.setUid(authManager.getFirebaseUser().getUid());
                     userData.setEmail(emailString);
                     userData.setName(nameString);
                     userData.setPhoto("");
@@ -101,7 +100,7 @@ public class SignUpActivity extends BaseActivity {
                     userSetting.push = false;
                     userData.setSettings(userSetting);
 
-                    databaseReference.child("users").child(emailString).setValue(userData);
+                    databaseReference.child("users").child(authManager.getFirebaseUser().getUid()).setValue(userData);
 
                     Toast.makeText(SignUpActivity.this, "회원가입 완료.",  Toast.LENGTH_SHORT).show();
                     finish();

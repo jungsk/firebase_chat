@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import futurewiz.cou.kr.firebasechat.R;
+import futurewiz.cou.kr.firebasechat.login.AuthManager;
 
 /**
  * Created by yongtae on 2017. 12. 14..
@@ -23,6 +24,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     protected DatabaseReference databaseReference = firebaseDatabase.getReference();
+    protected AuthManager authManager = AuthManager.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

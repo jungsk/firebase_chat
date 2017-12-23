@@ -1,6 +1,7 @@
 package futurewiz.cou.kr.firebasechat.login;
 
 import android.support.annotation.NonNull;
+import android.widget.Switch;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,15 +19,11 @@ public class AuthManager {
     private FirebaseAuth mAuth;
 
     public interface SignInListener {
-        void onResult(boolean success);
+        void onResult(Boolean success);
     }
 
     public interface SignUpListener {
-        void onResult(boolean success);
-    }
-
-    public interface SignOutListener {
-        void onResult(boolean success);
+        void onResult(Boolean success, String exceptionString);
     }
 
     private AuthManager() {
@@ -48,10 +45,10 @@ public class AuthManager {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
-                    signUpListener.onResult(true);
+                    signUpListener.onResult(true, "");
                 } else {
                     // If sign in fails, display a message to the user.
-                    signUpListener.onResult(false);
+                    signUpListener.onResult(false, task.getException().toString());
                 }
             }
         });

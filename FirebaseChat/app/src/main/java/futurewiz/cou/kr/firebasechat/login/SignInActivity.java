@@ -67,7 +67,7 @@ public class SignInActivity extends BaseActivity {
 
         authManager.signIn(idString, pwString, new AuthManager.SignInListener() {
             @Override
-            public void onResult(boolean success) {
+            public void onResult(Boolean success) {
                 if (success) {
                     finish();
                 } else {

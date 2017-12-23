@@ -6,10 +6,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import futurewiz.cou.kr.firebasechat.R;
@@ -23,11 +19,8 @@ import futurewiz.cou.kr.firebasechat.base.BaseActivity;
 
 public class SignUpActivity extends BaseActivity {
 
-    @BindView(R.id.id_check_button)
-    Button idCheckButton;
-
-    @BindView(R.id.sign_button)
-    Button SignupButton;
+    @BindView(R.id.name_input)
+    EditText nameEditText;
 
     @BindView(R.id.email_input)
     EditText EmailEditText;
@@ -38,14 +31,18 @@ public class SignUpActivity extends BaseActivity {
     @BindView(R.id.check_pass_input)
     EditText CheckpassEditText;
 
+    @BindView(R.id.sign_button)
+    Button SignupButton;
+
     private AuthManager authManager = AuthManager.getInstance();
-    private String emailText;
-    private String passwordText;
-    private String checkPasswordText;
+    private String nameString;
+    private String emailString;
+    private String passwordString;
+    private String checkPasswordString;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_sign_up);
         super.onCreate(savedInstanceState);
 
         setTitle("회원가입");
@@ -58,39 +55,45 @@ public class SignUpActivity extends BaseActivity {
 
     @OnClick(R.id.sign_button)
     public void onSignButtonClick() {
-        emailText = EmailEditText.getText().toString();
-        passwordText = PassEditText.getText().toString();
-        checkPasswordText = CheckpassEditText.getText().toString();
+        nameString = nameEditText.getText().toString();
+        emailString = EmailEditText.getText().toString();
+        passwordString = PassEditText.getText().toString();
+        checkPasswordString = CheckpassEditText.getText().toString();
 
-        if (emailText.isEmpty()) {
+        if (nameString.isEmpty()) {
+            Toast.makeText(this, "닉네임을 입력해주세요.", Toast.LENGTH_LONG);
+            return;
+        }
+        if (emailString.isEmpty()) {
             Toast.makeText(this, "이메일 주소를 입력해주세요.", Toast.LENGTH_LONG);
             return;
         }
-        if (passwordText.isEmpty()) {
+        if (passwordString.isEmpty()) {
             Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_LONG);
             return;
         }
-        if (checkPasswordText.isEmpty()) {
+        if (checkPasswordString.isEmpty()) {
             Toast.makeText(this, "비밀번호 확인을 입력해주세요.", Toast.LENGTH_LONG);
             return;
         }
 
-        if (!passwordText.equals(checkPasswordText)) {
+        if (!passwordString.equals(checkPasswordString)) {
             Toast.makeText(this, "비밀번호가 다릅니다.", Toast.LENGTH_LONG);
             return;
         }
 
-        this.signUp(emailText, passwordText);
+        this.signUp(emailString, passwordString);
     }
 
     public void signUp(final String email, String password) {
         authManager.signUp(email, password, new AuthManager.SignUpListener() {
             @Override
-            public void onResult(boolean success) {
+            public void onResult(Boolean success, String exceptionString) {
                 if (success) {
                     UserData userData = new UserData();
-                    userData.setEmail(emailText);
-                    userData.setName(emailText);
+                    userData.setUid(authManager.getFirebaseUser().getUid());
+                    userData.setEmail(emailString);
+                    userData.setName(nameString);
                     userData.setPhoto("");
 
                     // 기본 설정
@@ -98,12 +101,12 @@ public class SignUpActivity extends BaseActivity {
                     userSetting.push = false;
                     userData.setSettings(userSetting);
 
-                    databaseReference.child("users").child(authManager.getFirebaseUser().getUid()).setValue(userData);
+                    databaseReference.child("users").child(emailString).setValue(userData);
 
                     Toast.makeText(SignUpActivity.this, "회원가입 완료.",  Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(SignUpActivity.this, "회원가입 실패.",  Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "회원가입 실패." + exceptionString,  Toast.LENGTH_SHORT).show();
                 }
             }
         });

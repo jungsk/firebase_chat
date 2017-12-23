@@ -23,16 +23,16 @@ public class SignUpActivity extends BaseActivity {
     EditText nameEditText;
 
     @BindView(R.id.email_input)
-    EditText EmailEditText;
+    EditText emailEditText;
 
     @BindView(R.id.pass_input)
-    EditText PassEditText;
+    EditText passEditText;
 
     @BindView(R.id.check_pass_input)
-    EditText CheckpassEditText;
+    EditText passCheckEditText;
 
     @BindView(R.id.sign_button)
-    Button SignupButton;
+    Button signUpButton;
 
     private AuthManager authManager = AuthManager.getInstance();
     private String nameString;
@@ -56,9 +56,9 @@ public class SignUpActivity extends BaseActivity {
     @OnClick(R.id.sign_button)
     public void onSignButtonClick() {
         nameString = nameEditText.getText().toString();
-        emailString = EmailEditText.getText().toString();
-        passwordString = PassEditText.getText().toString();
-        checkPasswordString = CheckpassEditText.getText().toString();
+        emailString = emailEditText.getText().toString();
+        passwordString = passEditText.getText().toString();
+        checkPasswordString = passCheckEditText.getText().toString();
 
         if (nameString.isEmpty()) {
             Toast.makeText(this, "닉네임을 입력해주세요.", Toast.LENGTH_LONG);

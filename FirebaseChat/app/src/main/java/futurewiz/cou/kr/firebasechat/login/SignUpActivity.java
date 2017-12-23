@@ -6,6 +6,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import futurewiz.cou.kr.firebasechat.R;
@@ -35,6 +39,9 @@ public class SignUpActivity extends BaseActivity {
     EditText CheckpassEditText;
 
     private AuthManager authManager = AuthManager.getInstance();
+    private String emailText;
+    private String passwordText;
+    private String checkPasswordText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,9 +58,9 @@ public class SignUpActivity extends BaseActivity {
 
     @OnClick(R.id.sign_button)
     public void onSignButtonClick() {
-        String emailText = EmailEditText.getText().toString();
-        String passwordText = PassEditText.getText().toString();
-        String checkPasswordText = CheckpassEditText.getText().toString();
+        emailText = EmailEditText.getText().toString();
+        passwordText = PassEditText.getText().toString();
+        checkPasswordText = CheckpassEditText.getText().toString();
 
         if (emailText.isEmpty()) {
             Toast.makeText(this, "이메일 주소를 입력해주세요.", Toast.LENGTH_LONG);
@@ -76,11 +83,23 @@ public class SignUpActivity extends BaseActivity {
         this.signUp(emailText, passwordText);
     }
 
-    public void signUp(String email, String password) {
+    public void signUp(final String email, String password) {
         authManager.signUp(email, password, new AuthManager.SignUpListener() {
             @Override
             public void onResult(boolean success) {
                 if (success) {
+                    UserData userData = new UserData();
+                    userData.setEmail(emailText);
+                    userData.setName(emailText);
+                    userData.setPhoto("");
+
+                    // 기본 설정
+                    UserData.UserSettings userSetting = new UserData.UserSettings();
+                    userSetting.push = false;
+                    userData.setSettings(userSetting);
+
+                    databaseReference.child("users").child(authManager.getFirebaseUser().getUid()).setValue(userData);
+
                     Toast.makeText(SignUpActivity.this, "회원가입 완료.",  Toast.LENGTH_SHORT).show();
                     finish();
                 } else {

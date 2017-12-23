@@ -54,7 +54,7 @@ public class SettingActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        databaseReference.child("users/aUser/settings/push").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("users/" + authManager.getFirebaseUser().getUid() + "/settings/push").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Boolean bool = (Boolean) dataSnapshot.getValue();

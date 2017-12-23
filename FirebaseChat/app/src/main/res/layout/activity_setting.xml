@@ -23,8 +23,12 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="25dp"
         android:text="알림    "
-        android:textSize="25dp"
-        />
+        android:textSize="25dp" />
 
-
+    <Button
+        android:id="@+id/sign_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="로그아웃" />
 </RelativeLayout>

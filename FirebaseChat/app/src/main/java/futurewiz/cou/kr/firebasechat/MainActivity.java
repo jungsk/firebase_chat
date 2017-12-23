@@ -24,8 +24,8 @@ import futurewiz.cou.kr.firebasechat.chat.ChatListFragment;
 import futurewiz.cou.kr.firebasechat.etc.ProfileActivity;
 import futurewiz.cou.kr.firebasechat.etc.SettingActivity;
 import futurewiz.cou.kr.firebasechat.frends.FriendsListFragment;
-import futurewiz.cou.kr.firebasechat.login.LoginActivity;
-import futurewiz.cou.kr.firebasechat.login.RegisterActivity;
+import futurewiz.cou.kr.firebasechat.login.AuthManager;
+import futurewiz.cou.kr.firebasechat.login.SignInActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -34,8 +34,6 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    FirebaseAuth firebaseAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
@@ -43,10 +41,14 @@ public class MainActivity extends BaseActivity {
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+    }
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser() == null) {
-            startActivity(new Intent(this, LoginActivity.class));
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (AuthManager.getInstance().getFirebaseUser() == null) {
+            startActivity(new Intent(this, SignInActivity.class));
         }
     }
 

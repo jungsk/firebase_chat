@@ -21,11 +21,11 @@
         </activity>
 
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".login.SignInActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".login.RegisterActivity"
+            android:name=".login.SignUpActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity

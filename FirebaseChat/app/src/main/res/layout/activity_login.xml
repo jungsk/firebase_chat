@@ -38,15 +38,15 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_pw"
         android:layout_marginLeft="23dp"
         android:layout_marginStart="23dp"
         android:layout_marginTop="99dp"
-        android:layout_toEndOf="@+id/loginup"
-        android:layout_toRightOf="@+id/loginup"
+        android:layout_toEndOf="@+id/sign_up"
+        android:layout_toRightOf="@+id/sign_up"
         android:text="로그인"
         android:textSize="20dp" />
 
@@ -75,11 +75,11 @@
         android:textSize="25dp" />
 
     <Button
-        android:id="@+id/loginup"
+        android:id="@+id/sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/login"
-        android:layout_alignBottom="@+id/login"
+        android:layout_alignBaseline="@+id/sign_in"
+        android:layout_alignBottom="@+id/sign_in"
         android:layout_marginLeft="6dp"
         android:layout_marginStart="6dp"
         android:layout_toEndOf="@+id/textid"

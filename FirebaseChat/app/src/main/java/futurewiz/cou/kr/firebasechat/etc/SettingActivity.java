@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import futurewiz.cou.kr.firebasechat.R;
 import futurewiz.cou.kr.firebasechat.base.BaseActivity;
+
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.Switch;
@@ -26,6 +29,8 @@ public class SettingActivity extends BaseActivity {
 
     @BindView(R.id.allim)
     Switch allim;
+    @BindView(R.id.sign_out)
+    Button signOut;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,5 +66,11 @@ public class SettingActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @OnClick(R.id.sign_out)
+    public void onSignOutClick() {
+        authManager.signOut();
+        finish();
     }
 }

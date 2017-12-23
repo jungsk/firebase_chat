@@ -1,18 +1,10 @@
 package futurewiz.cou.kr.firebasechat.login;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,7 +17,7 @@ import futurewiz.cou.kr.firebasechat.base.BaseActivity;
  * 회원가입 Activity
  */
 
-public class RegisterActivity extends BaseActivity {
+public class SignUpActivity extends BaseActivity {
 
     @BindView(R.id.id_check_button)
     Button idCheckButton;
@@ -42,7 +34,7 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.check_pass_input)
     EditText CheckpassEditText;
 
-    private FirebaseAuth mAuth;
+    private AuthManager authManager = AuthManager.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,13 +42,11 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setTitle("회원가입");
-        mAuth = FirebaseAuth.getInstance();
     }
+
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
     @OnClick(R.id.sign_button)
@@ -83,21 +73,19 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
-        this.registerEmail(emailText, passwordText);
+        this.signUp(emailText, passwordText);
     }
 
-    public  void registerEmail(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    public void signUp(String email, String password) {
+        authManager.signUp(email, password, new AuthManager.SignUpListener() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                     // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(RegisterActivity.this, "회원가입 완료.",  Toast.LENGTH_SHORT).show();
+            public void onResult(boolean success) {
+                if (success) {
+                    Toast.makeText(SignUpActivity.this, "회원가입 완료.",  Toast.LENGTH_SHORT).show();
                     finish();
-                 } else {
-                     // If sign in fails, display a message to the user.
-                    Toast.makeText(RegisterActivity.this, "회원가입 실패.",  Toast.LENGTH_SHORT).show();
-                 }
+                } else {
+                    Toast.makeText(SignUpActivity.this, "회원가입 실패.",  Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

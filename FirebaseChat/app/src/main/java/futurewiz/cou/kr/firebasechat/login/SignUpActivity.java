@@ -23,9 +23,6 @@ import futurewiz.cou.kr.firebasechat.base.BaseActivity;
 
 public class SignUpActivity extends BaseActivity {
 
-    @BindView(R.id.id_check_button)
-    Button idCheckButton;
-
     @BindView(R.id.sign_button)
     Button SignupButton;
 

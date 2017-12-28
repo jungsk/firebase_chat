@@ -41,7 +41,7 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 Map<String, Object> childUpdates = new HashMap<>();
-                childUpdates.put("users/aUser/settings/push", b);
+                childUpdates.put("users/" + authManager.getFirebaseUser().getUid() + "/settings/push", b);
 
                 databaseReference.updateChildren(childUpdates);
             }

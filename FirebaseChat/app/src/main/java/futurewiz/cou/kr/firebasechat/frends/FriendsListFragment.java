@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -50,12 +51,16 @@ public class FriendsListFragment extends BaseFragment {
         adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1);
         friendsListView.setAdapter(adapter);
 
-        databaseReference.child("friends/BNQ86mcIbQOwRmt8RuoERwsmNGC2/").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("friends/" + authManager.getFirebaseUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, String> friendsData = (Map<String, String>) dataSnapshot.getValue();
-
-                adapter.add(friendsData);
+                if (dataSnapshot.getValue() != null) {
+                    Map<String, FriendData> friendsData = (Map<String, FriendData>) dataSnapshot.getValue();
+                    for (String key :friendsData.keySet()) {
+//                        FriendData friendData = (FriendData) friendsData.get(key);
+//                        adapter.add(friendData.getName());
+                    }
+                }
             }
 
             @Override

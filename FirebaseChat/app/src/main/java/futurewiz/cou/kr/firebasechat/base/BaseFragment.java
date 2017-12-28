@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import futurewiz.cou.kr.firebasechat.login.AuthManager;
 
 /**
  * Created by yongtae on 2017. 12. 14..
@@ -17,6 +18,7 @@ public class BaseFragment extends Fragment {
 
     protected FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     protected DatabaseReference databaseReference = firebaseDatabase.getReference();
+    protected AuthManager authManager = AuthManager.getInstance();
 
     protected View view;
     protected Unbinder unbinder;

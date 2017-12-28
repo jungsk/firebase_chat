@@ -40,6 +40,10 @@
             android:name=".etc.SettingActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <activity
+            android:name=".frends.Friends_addActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
     </application>
 
 </manifest>

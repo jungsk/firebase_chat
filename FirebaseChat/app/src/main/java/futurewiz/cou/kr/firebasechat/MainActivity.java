@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -17,10 +18,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import futurewiz.cou.kr.firebasechat.base.BaseActivity;
 import futurewiz.cou.kr.firebasechat.chat.ChatListFragment;
+import futurewiz.cou.kr.firebasechat.frends.Friends_addActivity;
 import futurewiz.cou.kr.firebasechat.etc.ProfileActivity;
 import futurewiz.cou.kr.firebasechat.etc.SettingActivity;
 import futurewiz.cou.kr.firebasechat.frends.FriendsListFragment;
@@ -36,6 +40,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
 
@@ -50,6 +55,11 @@ public class MainActivity extends BaseActivity {
         if (AuthManager.getInstance().getFirebaseUser() == null) {
             startActivity(new Intent(this, SignInActivity.class));
         }
+    }
+    @OnClick(R.id.button)
+    public void onButton1Clicked(View v) {
+
+        startActivity(new Intent(this, Friends_addActivity.class));
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -103,6 +113,8 @@ public class MainActivity extends BaseActivity {
             case R.id.action_setting:
                 startActivity(new Intent(this, SettingActivity.class));
                 break;
+
+
         }
         return true;
     }
@@ -114,10 +126,10 @@ public class MainActivity extends BaseActivity {
 
     public void readDataExample() {
         // 데이터 읽기
-        databaseReference.child("users").child("aUser").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("friends/BNQ86mcIbQOwRmt8RuoERwsmNGC2/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Map<String, Boolean> friendsData = (Map<String, Boolean>) dataSnapshot;
             }
 
             @Override

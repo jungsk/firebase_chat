@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import futurewiz.cou.kr.firebasechat.R;
 import futurewiz.cou.kr.firebasechat.base.BaseActivity;
+import futurewiz.cou.kr.firebasechat.login.UserData;
 
 /**
  * Created by my on 2017-12-09.
@@ -37,8 +38,13 @@ public class ChattingActivity extends BaseActivity {
     @BindView(R.id.send_button)
     Button sendButton;
 
-    private String userName;
+    private String roomID = "";
     private ArrayAdapter adapter;
+
+    private String myUID = "";
+    private String friendUID = "";
+    private UserData myUserData;
+    private UserData friendUserData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,26 +53,55 @@ public class ChattingActivity extends BaseActivity {
 
         setTitle("채팅방");
 
-        userName = "aUser";
+        myUID = authManager.getFirebaseUser().getUid();
+        friendUID = getIntent().getStringExtra("friendUID");
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1);
         chatListView.setAdapter(adapter);
 
-        databaseReference.child("rooms").child("room01").child("message").addChildEventListener(childEventListner);
+        connectChat();
+    }
 
-        databaseReference.child("rooms/room01/users/" + userName).addListenerForSingleValueEvent(new ValueEventListener() {
+    @OnClick(R.id.send_button)
+    public void buttonOnClick() {
+        // 채팅 전송
+        if (!roomID.isEmpty()) {
+            String sendMessage = messageEditText.getText().toString();
+
+            if (!sendMessage.isEmpty()) {
+                ChatData chatData = new ChatData();
+                chatData.setUID(authManager.getFirebaseUser().getUid());
+                chatData.setMessage(messageEditText.getText().toString());
+                chatData.setTimestamp(1);
+
+                databaseReference.child("rooms/").child(roomID).push().setValue(chatData);
+
+                messageEditText.setText("");
+            } else {
+                Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    // 채팅방 연결
+    public void connectChat() {
+        // 상대방 UserData 요청
+        databaseReference.child("users").child(friendUID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Boolean boolValue = (Boolean) dataSnapshot.getValue();
+                // 나의 UserData
+                myUserData = authManager.getUserData();
+                // 상대방 UserData
+                friendUserData = dataSnapshot.getValue(UserData.class);
 
-                if (boolValue == false) {
-                    Toast.makeText(getApplicationContext(), "접속 금지", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "no", Toast.LENGTH_SHORT).show();
-                }
+                if (!friendUID.isEmpty()) {
+                    // 채팅방 번호 생성
+                    roomID = myUID.compareTo(friendUID) >= 0 ? (friendUID + myUID).hashCode() + "" : "" + (myUID + friendUID).hashCode();
 
+                    if (!roomID.isEmpty()) {
+                        databaseReference.child("rooms/").child(roomID).addChildEventListener(childEventListner);
+                    }
+                }
             }
 
             @Override
@@ -76,33 +111,19 @@ public class ChattingActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.send_button)
-    public void buttonOnClick() {
-        String sendMessage = messageEditText.getText().toString();
-
-        if (!sendMessage.isEmpty()) {
-            ChatData chatData = new ChatData();
-            chatData.setUserId(userName);
-            chatData.setMessage(messageEditText.getText().toString());
-            chatData.setTimestamp(1);
-
-            databaseReference.child("rooms").child("room01").child("message").push().setValue(chatData);
-
-            messageEditText.setText("");
-        } else {
-            Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_LONG);
-        }
-    }
-
     private ChildEventListener childEventListner = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             ChatData chatData = dataSnapshot.getValue(ChatData.class);
-            adapter.add(chatData.getUserId() + " : " + chatData.getMessage());
+            String userName = "";
 
-            Map<String, Object> childUpdates = new HashMap<>();
-            childUpdates.put("rooms/room01/users/aUser", false);
-            databaseReference.updateChildren(childUpdates);
+            if (myUID.equals(chatData.getUID())) {
+                userName = myUserData.getName();
+            } else {
+                userName = friendUserData.getName();
+            }
+
+            adapter.add(userName + " : " + chatData.getMessage());
 
             chatListView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         }

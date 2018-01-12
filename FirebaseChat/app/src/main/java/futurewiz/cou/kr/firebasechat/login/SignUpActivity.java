@@ -61,24 +61,24 @@ public class SignUpActivity extends BaseActivity {
         checkPasswordString = passCheckEditText.getText().toString();
 
         if (nameString.isEmpty()) {
-            Toast.makeText(this, "닉네임을 입력해주세요.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "닉네임을 입력해주세요.", Toast.LENGTH_LONG).show();
             return;
         }
         if (emailString.isEmpty()) {
-            Toast.makeText(this, "이메일 주소를 입력해주세요.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "이메일 주소를 입력해주세요.", Toast.LENGTH_LONG).show();
             return;
         }
         if (passwordString.isEmpty()) {
-            Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_LONG).show();
             return;
         }
         if (checkPasswordString.isEmpty()) {
-            Toast.makeText(this, "비밀번호 확인을 입력해주세요.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "비밀번호 확인을 입력해주세요.", Toast.LENGTH_LONG).show();
             return;
         }
 
         if (!passwordString.equals(checkPasswordString)) {
-            Toast.makeText(this, "비밀번호가 다릅니다.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "비밀번호가 다릅니다.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -91,6 +91,8 @@ public class SignUpActivity extends BaseActivity {
             public void onResult(Boolean success, String exceptionString) {
                 if (success) {
                     UserData userData = new UserData();
+
+                    userData.setUid(authManager.getFirebaseUser().getUid());
                     userData.setEmail(emailString);
                     userData.setName(nameString);
                     userData.setPhoto("");

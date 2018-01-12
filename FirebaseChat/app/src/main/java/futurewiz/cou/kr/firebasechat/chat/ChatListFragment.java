@@ -74,33 +74,32 @@ public class ChatListFragment extends BaseFragment {
                     arrayList.add(child.next().getKey());
 
                     // 자신의 계정이 채팅에 참여할 수 있는지 없는지 확인하여 리스트에 추가할지 추가 안 할지 결정한는 코드
-                    databaseReference.child("rooms/" + arrayList.get(0) + "/users/" + "aUser").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            boolValue = (Boolean) dataSnapshot.getValue();
-
-                            // 사용자가 접속할 수 있다면
-                            if (boolValue) {
-                                arrayAdapter.add(arrayList.get(0));
-                            }
-                            else if (boolValue == null) {
-                                /* 방 만들기
-                                Map<String, Boolean> joinUsers = new HashMap<>();
-                                joinUsers.put("myUserId", true);
-                                joinUsers.put("yourUserId", true);
-                                DatabaseReference roomData = databaseReference.child("rooms").push();
-                                roomData.getKey();
-                                roomData.setValue(joinUsers);
-                                */
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+//                    databaseReference.child("rooms/" + arrayList.get(0) + "/users/" + "aUser").addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            boolValue = (Boolean) dataSnapshot.getValue();
+//
+//                            // 사용자가 접속할 수 있다면
+//                            if (boolValue) {
+//                                arrayAdapter.add(arrayList.get(0));
+//                            } else if (boolValue == null) {
+//                                /* 방 만들기
+//                                Map<String, Boolean> joinUsers = new HashMap<>();
+//                                joinUsers.put("myUserId", true);
+//                                joinUsers.put("yourUserId", true);
+//                                DatabaseReference roomData = databaseReference.child("rooms").push();
+//                                roomData.getKey();
+//                                roomData.setValue(joinUsers);
+//                                */
+//                            }
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
                 }
 
                 chat_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -56,12 +56,12 @@ public class SignInActivity extends BaseActivity {
         String pwString = pwEditText.getText().toString();
 
         if (idString.isEmpty()) {
-            Toast.makeText(this, "이메일 주소를 입력하세요.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "이메일 주소를 입력하세요.", Toast.LENGTH_LONG).show();
             return;
         }
 
         if (pwString.isEmpty()) {
-            Toast.makeText(this, "비밀번호를 입력하세요.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "비밀번호를 입력하세요.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -71,7 +71,7 @@ public class SignInActivity extends BaseActivity {
                 if (success) {
                     finish();
                 } else {
-                    Toast.makeText(SignInActivity.this, "이메일 또는 비밀번호를 확인 해주세요.", Toast.LENGTH_LONG);
+                    Toast.makeText(SignInActivity.this, "이메일 또는 비밀번호를 확인 해주세요.", Toast.LENGTH_LONG).show();
                 }
             }
         });

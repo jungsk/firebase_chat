@@ -12,12 +12,21 @@ public class UserData {
         public Boolean push;
     }
 
+    private String uid;
     private String email;
     private Map<String, Boolean> friends;
     private String name;
     private ArrayList<Map<String, Boolean>> rooms;
     private String photo;
     private UserSettings settings;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getEmail() {
         return email;

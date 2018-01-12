@@ -12,31 +12,53 @@ import futurewiz.cou.kr.firebasechat.login.UserData;
 
 public class FriendsManager {
     private static FriendsManager instance = new FriendsManager();
-    private List<FriendData> friendsList = new ArrayList();
+    private List<UserData> friendsList = new ArrayList();
+
     public static FriendsManager getInstance() {
         return instance;
     }
 
-    public List<FriendData> getFriendsList() {
+    public List<UserData> getFriendsList() {
         return friendsList;
     }
 
-    public void addFriend(FriendData friendData) {
+    public void addFriend(UserData friendData) {
         friendsList.add(friendData);
     }
 
-    public void removeFriend(FriendData removeFrinedData) {
-        friendsList.remove(removeFrinedData);
+    public void removeFriend(UserData friendData) {
+        friendsList.remove(friendData);
     }
 
-    public Boolean isFriend(FriendData friendData) {
-        Boolean isFriend = false;
-        for (FriendData friendData1: friendsList) {
-            if (friendData1.getEmail().equals(friendData.getEmail())) {
-                isFriend = true;
+    public void clear() {
+        friendsList.clear();
+    }
+
+    public UserData isFriend(UserData friendData) {
+        UserData findFriendData = null;
+
+        for (UserData _data: friendsList) {
+            if (_data != null && friendData != null) {
+                if (_data.getUid().equals(friendData.getUid())) {
+                    findFriendData = _data;
+                }
             }
         }
 
-        return isFriend;
+        return findFriendData;
+    }
+
+    public UserData isFriend(String uid) {
+        UserData findFriendData = null;
+
+        for (UserData _data: friendsList) {
+            if (_data != null) {
+                if (_data.getUid().equals(uid)) {
+                    findFriendData = _data;
+                }
+            }
+        }
+
+        return findFriendData;
     }
 }

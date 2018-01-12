@@ -1,7 +1,6 @@
 package futurewiz.cou.kr.firebasechat.login;
 
 import android.support.annotation.NonNull;
-import android.widget.Switch;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,6 +16,7 @@ public class AuthManager {
 
     private static AuthManager instance = new AuthManager();
     private FirebaseAuth mAuth;
+    private UserData userData;
 
     public interface SignInListener {
         void onResult(Boolean success);
@@ -36,6 +36,18 @@ public class AuthManager {
 
     public FirebaseUser getFirebaseUser() {
         return mAuth.getCurrentUser();
+    }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
+
+    public Boolean isLogined() {
+        return getFirebaseUser() != null;
     }
 
     // 회원가입

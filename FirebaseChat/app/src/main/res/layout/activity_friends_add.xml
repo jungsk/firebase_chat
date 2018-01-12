@@ -22,17 +22,19 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:ems="15"
-        android:inputType="textEmailAddress"
-        android:text="email" />
+        android:hint="이메일 주소"
+        android:inputType="textEmailAddress" />
 
     <Button
         android:id="@+id/add_friend"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/find_email"
-        android:layout_alignStart="@+id/find_email"
+        android:layout_alignRight="@+id/find_email"
         android:layout_below="@+id/find_email"
-        android:layout_marginTop="18dp"
-        android:text="추가" />
+        android:layout_marginTop="10dp"
+        android:background="@android:color/holo_green_dark"
+        android:text="추가"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

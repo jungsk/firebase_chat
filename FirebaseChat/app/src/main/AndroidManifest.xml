@@ -41,7 +41,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".frends.Friends_addActivity"
+            android:name=".frends.FriendsAddActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
     </application>

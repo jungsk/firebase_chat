@@ -1,20 +1,13 @@
 package futurewiz.cou.kr.firebasechat.etc;
 
-import android.nfc.Tag;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import butterknife.BindView;
-import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
-import futurewiz.cou.kr.firebasechat.R;
-import futurewiz.cou.kr.firebasechat.base.BaseActivity;
-
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.Switch;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +19,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
+import futurewiz.cou.kr.firebasechat.R;
+import futurewiz.cou.kr.firebasechat.base.BaseActivity;
+
 /**
  * Created by bag-yongtae on 2017. 12. 15..
  * 설정 Activity
@@ -33,8 +32,8 @@ import java.util.Map;
 
 public class SettingActivity extends BaseActivity {
 
-    @BindView(R.id.allim)
-    Switch allim;
+    @BindView(R.id.notice)
+    Switch notice;
     @BindView(R.id.sign_out)
     Button signOut;
 
@@ -44,21 +43,32 @@ public class SettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setTitle("설정");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        checkAllimSetting();
+        checkNoticeSetting();
     }
 
-    public void checkAllimSetting() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void checkNoticeSetting() {
         databaseReference.child("users/" + authManager.getFirebaseUser().getUid() + "/settings/push").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Boolean bool = (Boolean) dataSnapshot.getValue();
-                allim.setChecked(bool);
+                notice.setChecked(bool);
             }
 
             @Override
@@ -68,7 +78,7 @@ public class SettingActivity extends BaseActivity {
         });
     }
 
-    @OnCheckedChanged(R.id.allim)
+    @OnCheckedChanged(R.id.notice)
     public void onAllimCheckedChange(CompoundButton compoundButton, boolean b) {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("users/" + authManager.getFirebaseUser().getUid() + "/settings/push", b);
@@ -83,18 +93,31 @@ public class SettingActivity extends BaseActivity {
     }
 
     @OnClick(R.id.delete)
-    public void onUserDeleteClick(){
-        final String firebaseUid = authManager.getFirebaseUser().getUid();
+    public void onUserDeleteClick() {
+        new AlertDialog.Builder(this)
+                .setTitle("회원탈퇴")
+                .setMessage("회원탈퇴시 모든 데이터가 삭제됩니다.\n회원탈퇴를 하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("회원탈퇴", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        final String firebaseUid = authManager.getFirebaseUser().getUid();
 
-        authManager.getFirebaseUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    databaseReference.child("users/" + firebaseUid).removeValue();
-                    finish();
-                }
-            }
-        });
+                        authManager.getFirebaseUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    databaseReference.child("users/" + firebaseUid).removeValue();
+                                    finish();
+                                }
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
     }
 
 }

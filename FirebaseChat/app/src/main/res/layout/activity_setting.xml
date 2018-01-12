@@ -13,35 +13,34 @@
         app:layout_scrollFlags="scroll|enterAlways" />
 
     <Switch
-        android:id="@+id/allim"
+        android:id="@+id/notice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/toolbar"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="25dp"
-        android:text="알림    "
-        android:textSize="25dp" />
-
-    <Button
-        android:id="@+id/sign_out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="로그아웃" />
+        android:layout_margin="10dp"
+        android:text="메시지 알림"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/sign_out"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/allim"
-        android:layout_marginTop="370dp"
-        android:text="계정탈퇴" />
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/holo_red_dark"
+        android:text="계정탈퇴"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/sign_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#3F51B5"
+        android:text="로그아웃"
+        android:textColor="@android:color/white" />
 </RelativeLayout>

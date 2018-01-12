@@ -6,16 +6,16 @@ package futurewiz.cou.kr.firebasechat.chat;
  */
 
 public class ChatData {
-    private String userId;
+    private String uid;
     private String message;
     private int timestamp;
 
-    public String getUserId() {
-        return userId;
+    public String getUID() {
+        return uid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUID(String uid) {
+        this.uid = uid;
     }
 
     public int getTimestamp() {
